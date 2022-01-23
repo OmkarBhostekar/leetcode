@@ -3,7 +3,6 @@ public:
     vector<int> sequentialDigits(int low, int high) {
         int mnd = to_string(low).length();
         int mxd = to_string(high).length();
-        int diff = (mxd - mnd)+1;
         vector<int> ans;
         for(int i=mnd; i<=mxd; i++){
             for(int j=1; j<(10-i+1); j++){
