@@ -1,17 +1,16 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& p) {
-        int lsf = INT_MAX;
-        int pist = 0;
+    int maxProfit(vector<int>& prices) {
         int ans = 0;
-        for(int i=0; i<p.size();i++){
-            if(p[i] < lsf){
-                lsf = p[i];
+        int curr = 0;
+        for(int i=0;i<prices.size()-1;i++){
+            int x = curr + (prices[i+1]-prices[i]);
+            if(x<0){
+                curr = 0;
+            }else{
+                curr = x;
             }
-            pist = p[i] - lsf;
-            if(pist > ans){
-                ans = pist;
-            }
+            ans = max(ans,curr);
         }
         return ans;
     }
