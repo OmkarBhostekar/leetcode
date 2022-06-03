@@ -1,14 +1,11 @@
 class NumMatrix {
 public:
-    int m,n;
     vector<vector<int>> v;
     
     NumMatrix(vector<vector<int>>& matrix) {
-        m = matrix.size();
-        n = matrix[0].size();
-        for(int i=0;i<m;i++){
+        for(int i=0;i<matrix.size();i++){
             vector<int> temp;
-            for(int j=0;j<n;j++){
+            for(int j=0;j<matrix[0].size();j++){
                 if(i==0 && j==0){
                     temp.push_back(matrix[i][j]);
                 }else if(i==0){
