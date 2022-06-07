@@ -2,7 +2,6 @@ class Solution {
 public:
     int rob(vector<int>& nums) {
         int n=nums.size();
-        vector<int> dp(n);
         int prev2 = nums[0];
         if(n==1) return prev2;
         int prev = max(prev2,nums[1]);
