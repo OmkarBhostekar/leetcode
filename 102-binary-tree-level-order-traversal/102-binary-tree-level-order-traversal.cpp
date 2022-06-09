@@ -11,23 +11,25 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
-        if(!root) return 0;
-        return max(height(root->left),height(root->right))+1;
-    }
-    
-    void bfs(TreeNode* root,vector<vector<int>> &ans,int lvl){
-        if(!root) return;
-        ans[lvl].push_back(root->val);
-        bfs(root->left,ans,lvl+1);
-        bfs(root->right,ans,lvl+1);
-    }
-    
     vector<vector<int>> levelOrder(TreeNode* root) {
-        int h = height(root);
-        if(h==0) return {};
-        vector<vector<int>> ans(h);
-        bfs(root,ans,0);
+        if(!root) return {};
+        queue<TreeNode*> q;
+        vector<vector<int>> ans;
+        q.push(root);
+        int len;
+        TreeNode* temp;
+        while(!q.empty()){
+            len = q.size();
+            vector<int> v;
+            for(int i=0;i<len;i++){
+                temp = q.front();
+                q.pop();
+                v.push_back(temp->val);
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+            }
+            ans.push_back(v);
+        }
         return ans;
     }
 };
