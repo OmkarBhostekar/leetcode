@@ -1,32 +1,31 @@
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nn, int target) {
-        vector<long long> nums;
-        for(auto x: nn) nums.push_back(x);
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
         int n = nums.size();
-        if(n==0) return {};
-        sort(nums.begin(), nums.end());
         vector<vector<int>> ans;
-        for(int i=0;i<n;i++){
-            long long target3 = (long long)target-(long long)nums[i];
-            for(int j=i+1; j<n; j++){
-                long long target2 = (long long) target3 - (long long)nums[j];
-                int front = j+1, back = n-1;
-                while(front<back){
-                    long long two_sum = nums[front]+nums[back];
-                    if(two_sum<target2) front++;
-                    else if(two_sum > target2) back--;
+        if(n<4) return ans;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n-3;i++){
+            for(int j=i+1;j<n-2;j++){
+                
+                int low =  j+1, high=n-1;
+                while(low<high){
+                    long long sum = (long long)nums[i] + (long long)nums[j] + (long long)nums[low] + (long long)nums[high];
+                    if(sum<target)
+                        low++;
+                    else if(sum>target)
+                        high--;
                     else{
-                        vector<int> v = { (int) nums[i], (int)nums[j],(int) nums[front], (int)nums[back] };
-                        ans.push_back(v);
-                        while(front < back && v[2] == nums[front]) ++front;
-                        while(front < back && v[3] == nums[back]) --back;
+                        ans.push_back({nums[i], nums[j], nums[low], nums[high]});
+                        low++;
+                        high--;
+                        while(low<high && nums[low] == nums[low-1]) low++;
+                        while(low<high && nums[high] == nums[high+1]) high--;
                     }
                 }
-                
-                while(j+1<n && nums[j] == nums[j+1]) ++j;
+                while(j<n-2 && nums[j] == nums[j+1]) j++;
             }
-            while(i+1<n && nums[i] == nums[i+1]) ++i;
+            while(i<n-3 && nums[i] == nums[i+1]) i++;
         }
         return ans;
     }
