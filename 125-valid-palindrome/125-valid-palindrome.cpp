@@ -1,17 +1,24 @@
 class Solution {
 public:
+    bool isValid(char ch){
+	    return (ch>=48 and ch<=57) or (ch>=65 and ch<=90) or (ch>=97 and ch<=122);
+    }
+
+    
     bool isPalindrome(string s) {
-        int i=0, j=s.length()-1;
-        while(i<j){
-            if(s[i]<48 or (s[i]>57 and s[i]<65) or (s[i]>90 and s[i]<97) or s[i]>122) ++i;
-            else if(s[j]<48 or (s[j]>57 and s[j]<65) or (s[j]>90 and s[j]<97) or s[j]>122) --j;
-            else {
-                if(s[i]<97) s[i] = (char) s[i]+32;
-                if(s[j]<97) s[j] = (char) s[j]+32;
-                if(s[i] != s[j]) return false;
-                i++;
-                j--;
+        int n = s.length(), start=0, end=n-1;
+        while(start<=end){
+            if(start == end) return true;
+            bool a=isValid(s[start]), b=isValid(s[end]);
+            if(a && b){
+                if(isdigit(s[start]) and isdigit(s[end]) and s[start] != s[end]) return false;
+                else if((isdigit(s[start]) and !isdigit(s[end])) or (!isdigit(s[start]) and isdigit(s[end]))) return false;
+                else if(tolower(s[start]) != tolower(s[end])) return false;
+                start++;
+                end--;
             }
+            if(!a) start++;
+            if(!b) end--;
         }
         return true;
     }
