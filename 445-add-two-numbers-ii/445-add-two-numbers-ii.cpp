@@ -10,9 +10,25 @@
  */
 class Solution {
 public:
+    ListNode* reverse(ListNode* head){
+        ListNode* cur = head;
+        ListNode* prev = NULL;
+        ListNode* next = NULL;
+        while(cur){
+            next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+    
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        stack<int> s1,s2,ans;
+        stack<int> s1,s2;
         int carry=0, sum=0;
+        ListNode* dummy = new ListNode(0);
+        ListNode* cur=dummy;
+        
         while(l1){
             s1.push(l1->val);
             l1 = l1->next;
@@ -33,16 +49,10 @@ public:
             }
             carry = sum/10;
             sum %= 10;
-            ans.push(sum);
-        }
-        if(carry) ans.push(carry);
-        ListNode* dummy = new ListNode(0);
-        ListNode* cur=dummy;
-        while(!ans.empty()){
-            cur->next = new ListNode(ans.top());
+            cur->next = new ListNode(sum);
             cur = cur->next;
-            ans.pop();
         }
-        return dummy->next;
+        if(carry) cur->next = new ListNode(carry);
+        return reverse(dummy->next);
     }
 };
