@@ -8,15 +8,25 @@
  */
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        ListNode* p1 = headA;
-        ListNode* p2 = headB;
-        while(p1!=p2){
-            if(p1==NULL) p1 = headB;
-            else p1 = p1->next;
-            if(p2==NULL) p2 = headA;
-            else p2 = p2->next;
+    ListNode *getIntersectionNode(ListNode *l1, ListNode *l2) {
+        unordered_set<ListNode*> st;
+        while(l1 && l2){
+            if(l1 == l2) return l1;
+            if(st.find(l1) != st.end()) return l1;
+            if(st.find(l2) != st.end()) return l2;
+            st.insert(l1);
+            st.insert(l2);
+            l1 = l1->next;
+            l2 = l2->next;
         }
-        return p1;
+        while(l1){
+            if(st.find(l1) != st.end()) return l1;
+            l1 = l1->next;
+        }
+        while(l2){
+            if(st.find(l2) != st.end()) return l2;
+            l2 = l2->next;
+        }
+        return NULL;
     }
 };
