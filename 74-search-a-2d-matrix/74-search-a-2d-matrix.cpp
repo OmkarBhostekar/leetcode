@@ -1,13 +1,10 @@
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& mat, int t) {
-        int r=mat.size(),c=mat[0].size();
-        if(t<mat[0][0] or t>mat[r-1][c-1]) return false;
-        int k=0;
-        while(k<r && t>=mat[k][0]) k++;
-        for(auto x: mat[k-1]){
-            if(t==x) return true;
-        }
-        return false;
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int i=0;
+        while(i<matrix.size() && target>=matrix[i][0]) i++;
+        if(i==0) return false;
+        i--;
+        return binary_search(matrix[i].begin(),matrix[i].end(),target);
     }
 };
