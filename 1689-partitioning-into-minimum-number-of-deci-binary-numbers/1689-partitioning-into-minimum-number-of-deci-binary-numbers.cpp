@@ -5,6 +5,7 @@ public:
         for(auto x: n){
             if(x>ans)
                 ans = x;
+            if(ans == '9') return 9;
         }
         return ans-'0';
     }
