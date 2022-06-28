@@ -11,22 +11,14 @@
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
-        ListNode *prev=head->next,*dup;
-        if(!prev->next) return prev;
-        ListNode *temp = prev->next;
-        while(temp){
-            while(temp && temp->val != 0){
-                prev->val += temp->val;
-                dup = temp;
-                temp = temp->next;
-                delete dup;
-            }
-            prev->next = temp->next; // skip 0
-            prev = prev->next;
-            delete temp;
-            if(prev) temp = prev->next;
-            else temp = prev;
+        if(!head || !head->next) return NULL;
+        if(!head->next->next) return head->next;
+        ListNode* prev = head->next, *cur = prev->next;
+        while(cur && cur->val != 0){
+            prev->val += cur->val;
+            cur = cur->next;
         }
-        return head->next;
+        prev->next = mergeNodes(cur);
+        return prev;
     }
 };
