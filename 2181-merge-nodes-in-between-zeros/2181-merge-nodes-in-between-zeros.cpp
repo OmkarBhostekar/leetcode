@@ -13,10 +13,12 @@ public:
     ListNode* mergeNodes(ListNode* head) {
         if(!head || !head->next) return NULL;
         if(!head->next->next) return head->next;
-        ListNode* prev = head->next, *cur = prev->next;
+        ListNode* prev = head->next, *cur = prev->next, *dup;
         while(cur && cur->val != 0){
             prev->val += cur->val;
+            dup = cur;
             cur = cur->next;
+            delete dup;
         }
         prev->next = mergeNodes(cur);
         return prev;
