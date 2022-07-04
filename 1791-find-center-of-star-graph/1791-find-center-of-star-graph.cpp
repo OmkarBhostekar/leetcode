@@ -1,15 +1,14 @@
 class Solution {
 public:
     int findCenter(vector<vector<int>>& edges) {
-        vector<vector<int>> adj(edges.size()+2);
+        vector<int> v(edges.size()+1);
         for(auto edge: edges){
-            adj[edge[0]].push_back(edge[1]);
-            adj[edge[1]].push_back(edge[0]);
+            v[edge[0]-1]++;
+            v[edge[1]-1]++;
         }
-        for(int i=1;i<adj.size();i++){
-            if(adj[i].size() == edges.size())
-                return i;
-        }
+        for(int i=0;i<v.size();i++) 
+            if(v[i] == edges.size()) 
+                return i+1;
         return -1;
     }
 };
