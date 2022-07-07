@@ -9,27 +9,29 @@
  */
 class Solution {
 public:
-    void preorder(TreeNode* root, TreeNode* p, TreeNode* q, vector<TreeNode*> &curPath, vector<TreeNode*> &path1, vector<TreeNode*> &path2){
+    void preOrder(TreeNode* root, TreeNode* p, TreeNode* q, vector<TreeNode*> &path, vector<TreeNode*> &pp, vector<TreeNode*> &pq){
         if(!root) return;
-        curPath.push_back(root);
-        if(root == p) path1 = curPath;
-        if(root == q) path2 = curPath;
-        preorder(root->left, p, q, curPath, path1, path2);
-        preorder(root->right, p, q, curPath, path1, path2);
-        curPath.pop_back();
+        path.push_back(root);
+        if(root == p)
+            pp = path;
+        else if(root == q)
+            pq = path;
+        preOrder(root->left,p,q,path,pp,pq);
+        preOrder(root->right,p,q,path,pp,pq);
+        path.pop_back();
+        
     }
     
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(!root) return root;
-        vector<TreeNode*> path1,path2,curPath;
-        preorder(root, p, q, curPath, path1, path2);
+        vector<TreeNode*> pp,pq,temp;
+        preOrder(root,p,q,temp,pp,pq);
+        TreeNode* lca = root;
         int i=0;
-        TreeNode* temp = NULL;
-        while(i<min(path1.size(),path2.size())){
-            if(path1[i] != path2[i]) return temp;
-            temp = path1[i];
-            i++;
+        while(i<pp.size() && i<pq.size()){
+            if(pp[i] != pq[i])
+                return lca;
+            lca = pp[i++];
         }
-        return temp;
+        return lca;
     }
 };
