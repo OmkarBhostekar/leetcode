@@ -22,21 +22,19 @@ public:
         if(!root) return root;
         queue<Node*> q;
         q.push(root);
-        int len=0;
-        Node* temp;
-
         while(!q.empty()){
-            len = q.size();
-            vector<Node*> nodes;
-            temp = NULL;
-            for(int i=0;i<len;i++){
-                auto top = q.front();
+            int len = q.size();
+            Node* temp = q.front();
+            q.pop();
+            for(int i=1;i<len;i++){
+                temp->next = q.front();
                 q.pop();
-                top->next = temp;
-                temp = top;
-                if(top->right) q.push(top->right);
-                if(top->left) q.push(top->left);
+                if(temp->left) q.push(temp->left);
+                if(temp->right) q.push(temp->right);
+                temp = temp->next;
             }
+            if(temp->left) q.push(temp->left);
+            if(temp->right) q.push(temp->right);
         }
         return root;
     }
