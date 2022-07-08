@@ -18,24 +18,31 @@ public:
 
 class Solution {
 public:
+    Node* findNext(Node* root){
+        if(!root) return root;
+        if(root->left) return root->left;
+        if(root->right) return root->right;
+        return findNext(root->next);
+    }
+    
     Node* connect(Node* root) {
         if(!root) return root;
-        queue<Node*> q;
-        q.push(root);
-        while(!q.empty()){
-            int len = q.size();
-            Node* temp = q.front();
-            q.pop();
-            for(int i=1;i<len;i++){
-                temp->next = q.front();
-                q.pop();
-                if(temp->left) q.push(temp->left);
-                if(temp->right) q.push(temp->right);
-                temp = temp->next;
+        
+        if(root->left){
+            if(root->right){
+                root->left->next = root->right;
+            }else{
+                root->left->next = findNext(root->next);
             }
-            if(temp->left) q.push(temp->left);
-            if(temp->right) q.push(temp->right);
         }
+        
+        if(root->right){
+            root->right->next = findNext(root->next);
+        }
+        
+        connect(root->right);
+        connect(root->left);
+        
         return root;
     }
 };
