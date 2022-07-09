@@ -1,9 +1,17 @@
 class Solution {
 public:
+    bool rec(vector<int> &nums,vector<int> &dp, int i, int n){
+        if(i >= n-1) return true;
+        if(dp[i] != -1) return dp[i];
+        for(int j=1;j<=nums[i];j++){
+            if(rec(nums,dp,i+j,n))
+                return dp[i] = true;
+        }
+        return dp[i] = false;
+    }
+    
     bool canJump(vector<int>& nums) {
-        int n = nums.size(), last = n-1, i, j;
-        for(i=n-2;i>=0;i--)
-            if(nums[i]+i>=last) last = i;
-        return last<=0;
+        vector<int> dp(nums.size()+1,-1);
+        return rec(nums, dp, 0, nums.size());
     }
 };
