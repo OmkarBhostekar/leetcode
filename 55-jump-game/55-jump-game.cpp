@@ -1,17 +1,21 @@
 class Solution {
 public:
-    bool rec(vector<int> &nums,vector<int> &dp, int i, int n){
-        if(i >= n-1) return true;
-        if(dp[i] != -1) return dp[i];
-        for(int j=1;j<=nums[i];j++){
-            if(rec(nums,dp,i+j,n))
+    bool rec(vector<int> &nums, int i, int n, vector<int> &dp){
+        if(i >= n-1) 
+            return true;
+        if(dp[i] != -1)
+            return dp[i];
+        if(nums[i] == 0)
+            return false;
+        for(int j=1; j<=nums[i]; j++)
+            if(rec(nums, i+j, n, dp))
                 return dp[i] = true;
-        }
-        return dp[i] = false;
+        return dp[i] =  false;
     }
     
     bool canJump(vector<int>& nums) {
-        vector<int> dp(nums.size()+1,-1);
-        return rec(nums, dp, 0, nums.size());
+        int n = nums.size();
+        vector<int> dp(n,-1);
+        return rec(nums, 0, n, dp);
     }
 };
