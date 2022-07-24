@@ -4,10 +4,9 @@ public:
         unordered_set<string> st;
         for(string e: emails){
             int idx = e.find("@");
-            string local = e.substr(0,idx);
             string temp = "";
-            for(auto ch: local){
-                if(ch == '+') break;
+            for(auto ch: e){
+                if(ch == '+' || ch == '@') break;
                 if(ch == '.') continue;
                 temp += ch;
             }
