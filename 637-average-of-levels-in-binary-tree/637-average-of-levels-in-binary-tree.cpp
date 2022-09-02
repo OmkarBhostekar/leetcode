@@ -11,22 +11,20 @@
  */
 class Solution {
 public:
+    void dfs(TreeNode* root, int lvl, map<int,pair<double,double>> &m){
+        if(!root) return;
+        m[lvl].first += root->val;
+        m[lvl].second++;
+        if(root->left) dfs(root->left,lvl+1,m);
+        if(root->right) dfs(root->right,lvl+1,m);
+    }
+    
     vector<double> averageOfLevels(TreeNode* root) {
         vector<double> ans;
-        if(!root) return ans;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            int len = q.size();
-            double sum = 0;
-            for(int i=0;i<len;i++){
-                TreeNode* front = q.front();
-                q.pop();
-                sum += (double) front->val;
-                if(front->left) q.push(front->left);
-                if(front->right) q.push(front->right);
-            }
-            ans.push_back(sum/len);
+        map<int,pair<double,double>> m;
+        dfs(root, 1, m);
+        for(auto x: m){
+            ans.push_back(x.second.first/x.second.second);
         }
         return ans;
     }
