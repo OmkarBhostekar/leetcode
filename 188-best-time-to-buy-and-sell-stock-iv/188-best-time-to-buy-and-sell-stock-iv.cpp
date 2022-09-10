@@ -13,9 +13,22 @@ public:
         return dp[i][buy][k] = profit;
     }
     
-    int maxProfit(int k, vector<int>& p) {
+    int maxProfit(int x, vector<int>& p) {
         int n = p.size();
-        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(k+1,-1)));
-        return f(p,0,1,k,dp);
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(x+1,0)));
+        for(int i=n-1;i>=0;i--){
+            for(int buy=0;buy<=1;buy++){
+                for(int k=1;k<=x;k++){
+                    int profit = INT_MIN;
+                    if(buy){
+                        profit = max(-p[i]+dp[i+1][0][k],0+dp[i+1][1][k]);
+                    }else{
+                        profit = max(p[i]+dp[i+1][1][k-1],0+dp[i+1][0][k]);
+                    }
+                    dp[i][buy][k] = profit;
+                }
+            }
+        }
+        return dp[0][1][x];
     }
 };
