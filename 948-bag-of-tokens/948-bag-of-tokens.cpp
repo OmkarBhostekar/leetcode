@@ -1,26 +1,29 @@
 class Solution {
 public:
-    int bagOfTokensScore(vector<int>& t, int p) {
-        sort(t.begin(),t.end());
-        int i=0,j=t.size()-1;
-        if(t.size()==1){
-            return t[0]<=p;
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        sort(tokens.begin(),tokens.end());
+        if (tokens.size()==0 || power<tokens[0]){ // 51 < 26
+            return 0;
         }
-        int score = 0;
-        int ans = 0;
-        while(i<j){
-            while(p>=t[i]){
-                p-=t[i];
+        int c=0;
+        int s=power;
+        int i=0;
+        int j=tokens.size()-1;
+        while(i<tokens.size() && s>=tokens[i] && i<=j){
+            s=s-tokens[i];
+            i++;
+            c++;
+        }
+        while(i<j-1){
+            s=s+tokens[j];
+            j--;
+            s=s-tokens[i];
+            i++;
+            while(s>=tokens[i] && i<=j){
+                s=s-tokens[i];
                 i++;
-                score++;
+                c++;
             }
-            ans = max(ans,score);
-            if(score>0){
-                p+=t[j];
-                j--;
-                score--;
-            }else break;
         }
-        return ans;
-    }
+    return c;}
 };
