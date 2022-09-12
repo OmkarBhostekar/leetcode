@@ -14,7 +14,7 @@ public:
             i++;
             c++;
         }
-        while(i<j-1){
+        while(i<j){
             s=s+tokens[j];
             j--;
             s=s-tokens[i];
