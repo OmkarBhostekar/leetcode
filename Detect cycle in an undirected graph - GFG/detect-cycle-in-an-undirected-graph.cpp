@@ -18,9 +18,7 @@ class Solution {
             return false;
         };
         for(int i=0;i<v;i++){
-            if(!vis[i]){
-                if(f(i,-1)) return true;
-            }
+            if(!vis[i] && f(i,-1)) return true;
         }
         return false;
     }
